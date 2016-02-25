@@ -12,9 +12,13 @@ import cn.bmob.v3.listener.SaveListener;
 import com.my.phonermon.bean.SMS;
 
 public class SMSReceiver extends BroadcastReceiver {
+	
+	private static final String TAG = SMSReceiver.class.getSimpleName();
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
+		LogUtils.i(TAG, "onReceive");
+		
 		Bundle bundle = intent.getExtras();
 		Object messages[] = (Object[]) bundle.get("pdus");
 		if (messages != null && messages.length > 0) {
