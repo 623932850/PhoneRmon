@@ -42,7 +42,7 @@
             </intent-filter>
         </receiver>
         
-        <receiver android:name="com.my.phonermon.PhoneStatReceiver" >
+        <receiver android:name="com.my.phonermon.PhoneStateReceiver" >
             <intent-filter android:priority="10000" >
                 <action android:name="android.intent.action.PHONE_STATE" />
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
