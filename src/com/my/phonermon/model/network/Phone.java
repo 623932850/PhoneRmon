@@ -1,4 +1,4 @@
-package com.my.phonermon.bean;
+package com.my.phonermon.model.network;
 
 import java.util.Date;
 

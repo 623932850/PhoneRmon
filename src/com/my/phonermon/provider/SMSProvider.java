@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.net.Uri;
 
 public class SMSProvider extends ContentProvider{
+	
+	public static final Uri smsUri = Uri.parse("content://sms");
 
 	@Override
 	public boolean onCreate() {

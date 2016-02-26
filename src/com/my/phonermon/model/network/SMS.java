@@ -1,10 +1,13 @@
-package com.my.phonermon.bean;
+package com.my.phonermon.model.network;
 
 import java.util.Date;
 
-import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 
-public class SMS extends BmobObject {
+import com.my.phonermon.MyApplication;
+
+public class SMS extends BaseBmobObject {
 	
 	private static final long serialVersionUID = 7606768867338772381L;
 	
@@ -106,6 +109,11 @@ public class SMS extends BmobObject {
 		}else{
 			statusText = "发送";
 		}
+	}
+	
+	public static void queryAll(FindListener<SMS> listener){
+		BmobQuery<SMS> query = new BmobQuery<SMS>();
+		query.findObjects(MyApplication.getMe(), listener);
 	}
 
 }

@@ -10,7 +10,7 @@ import android.telephony.TelephonyManager;
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.listener.SaveListener;
 
-import com.my.phonermon.bean.Phone;
+import com.my.phonermon.model.network.Phone;
 
 public class PhoneStateReceiver extends BroadcastReceiver {
 
