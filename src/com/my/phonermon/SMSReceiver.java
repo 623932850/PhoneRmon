@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import cn.bmob.v3.listener.SaveListener;
 
-import com.my.phonermon.bean.SMS;
+import com.my.phonermon.model.network.SMS;
 
 public class SMSReceiver extends BroadcastReceiver {
 	
