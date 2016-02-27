@@ -21,7 +21,6 @@ public class SMSManager {
 
 			@Override
 			public void onSuccess(List<NetSMS> netSMSList) {
-				ToastUtils.showToast("queryAll success");
 				List<DBSMS> dbSMSList = DBUtils.query(Uri.parse(URI_SMS), null,
 						null, null, null, DBSMS.class);
 				List<NetSMS> localNetSMSList = convert2NetSMS(dbSMSList);
@@ -45,19 +44,16 @@ public class SMSManager {
 
 					@Override
 					public void onSuccess() {
-						ToastUtils.showToast("insertBatch success");
 					}
 
 					@Override
 					public void onFailure(int arg0, String arg1) {
-						ToastUtils.showToast("insertBatch failure");
 					}
 				});
 			}
 
 			@Override
 			public void onError(int code, String msg) {
-				ToastUtils.showToast("queryAll failure");
 			}
 
 		});

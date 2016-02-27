@@ -1,11 +1,13 @@
 package com.my.phonermon;
 
-import com.my.phonermon.broadcast.ScreenActionReceiver;
-
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
+
+import com.my.phonermon.broadcast.ScreenActionReceiver;
 
 public class ScreenBroadcastService extends Service{
 
@@ -28,6 +30,14 @@ public class ScreenBroadcastService extends Service{
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+		Intent contentIntent = new Intent(this, ScreenBroadcastService.class);
+		Notification notification = new Notification();
+		notification.icon = R.drawable.ic_launcher;
+		notification.tickerText = "手机正在监控中";
+		notification.when = System.currentTimeMillis();
+		PendingIntent pintent=PendingIntent.getService(this, 0, contentIntent, 0);
+		notification.setLatestEventInfo(this, "Phonermon", "手机正在监控中", pintent);
+        startForeground(1, notification);
 		return Service.START_STICKY;
 	}
 	
@@ -37,6 +47,9 @@ public class ScreenBroadcastService extends Service{
 		if(receiver != null){
 			unregisterReceiver(receiver);
 		}
+		stopForeground(true);
+		Intent intent = new Intent(this, ScreenBroadcastService.class);
+		startService(intent);
 	}
 
 }
