@@ -1,6 +1,6 @@
 package com.my.phonermon.model.db;
 
-public class SMS {
+public class DBSMS {
 	private Integer _id;
 	private Integer thread_id;
 	private String address;
@@ -73,7 +73,7 @@ public class SMS {
 	public void setBody(String body) {
 		this.body = body;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "SMS [_id=" + _id + ", thread_id=" + thread_id + ", address="

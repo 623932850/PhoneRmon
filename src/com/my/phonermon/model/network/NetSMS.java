@@ -7,7 +7,7 @@ import cn.bmob.v3.listener.FindListener;
 
 import com.my.phonermon.MyApplication;
 
-public class SMS extends BaseBmobObject {
+public class NetSMS extends BaseBmobObject {
 	
 	private static final long serialVersionUID = 7606768867338772381L;
 	
@@ -18,6 +18,7 @@ public class SMS extends BaseBmobObject {
 	private String receiver;
 	private String smsMsg;
 	private Date senderTime;
+	private Long l_senderTimer;
 	private String imei;
 	private String imsi;
 	private String mac;
@@ -56,6 +57,9 @@ public class SMS extends BaseBmobObject {
 
 	public void setSenderTime(Date senderTime) {
 		this.senderTime = senderTime;
+		if(senderTime != null){
+			this.l_senderTimer = senderTime.getTime();
+		}
 	}
 
 	public String getImei() {
@@ -111,8 +115,39 @@ public class SMS extends BaseBmobObject {
 		}
 	}
 	
-	public static void queryAll(FindListener<SMS> listener){
-		BmobQuery<SMS> query = new BmobQuery<SMS>();
+	public Long getL_senderTimer() {
+		return l_senderTimer;
+	}
+
+	public void setL_senderTimer(Long l_senderTimer) {
+		this.l_senderTimer = l_senderTimer;
+		if(l_senderTimer != null){
+			this.senderTime = new Date(l_senderTimer);
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return 0;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(o == null){
+			return false;
+		}
+		if(!(o instanceof NetSMS)){
+			return false;
+		}
+		NetSMS netSMS = (NetSMS)o;
+		if(l_senderTimer == null || netSMS.l_senderTimer == null){
+			return false;
+		}
+		return l_senderTimer.longValue() == netSMS.l_senderTimer.longValue();
+	}
+	
+	public static void queryAll(FindListener<NetSMS> listener){
+		BmobQuery<NetSMS> query = new BmobQuery<NetSMS>();
 		query.findObjects(MyApplication.getMe(), listener);
 	}
 

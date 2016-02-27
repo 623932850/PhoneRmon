@@ -14,7 +14,4 @@ public class BaseBmobObject extends BmobObject{
 	public static void insertBatch(List<BmobObject> datas, SaveListener listener){
 		new BmobObject().insertBatch(MyApplication.getMe(), datas, listener);
 	}
-	
-	
-
 }

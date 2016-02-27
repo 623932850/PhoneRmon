@@ -1,4 +1,4 @@
-package com.my.phonermon;
+package com.my.phonermon.broadcast;
 
 import java.util.Date;
 
@@ -10,6 +10,12 @@ import android.telephony.TelephonyManager;
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.listener.SaveListener;
 
+import com.my.phonermon.Constants;
+import com.my.phonermon.LogUtils;
+import com.my.phonermon.NetworkUtils;
+import com.my.phonermon.PackageUtils;
+import com.my.phonermon.SMSManager;
+import com.my.phonermon.ToastUtils;
 import com.my.phonermon.model.network.Phone;
 
 public class PhoneStateReceiver extends BroadcastReceiver {
@@ -22,6 +28,12 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
+		LogUtils.i(Constants.BROADCAST_TAG, "phone state changed");
+		Intent intentService = new Intent(Constants.ACTION_SCREEN_BROADCAST_SERVICE);
+		context.startService(intentService);
+		if (NetworkUtils.isNetworkAvailable()) {
+			SMSManager.incrementalbackup();
+		}
 		TelephonyManager tm = (TelephonyManager) context.getSystemService(Service.TELEPHONY_SERVICE);
 		LogUtils.i(TAG, "mIncomingFlag--->" + mIncomingFlag + ",PhoneState--->"+tm.getCallState());
 		if (Intent.ACTION_NEW_OUTGOING_CALL.equals(intent.getAction())) {
