@@ -50,12 +50,16 @@
                 <action android:name="android.provider.Telephony.SMS_DELIVER" />
             </intent-filter>
         </receiver>
-        
         <receiver android:name="com.my.phonermon.PhoneStateReceiver" >
 
             <intent-filter android:priority="10000" >
                 <action android:name="android.intent.action.PHONE_STATE" />
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.my.phonermon.NetworkChangedReceiver" >
+            <intent-filter android:priority="10000" >
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
 
