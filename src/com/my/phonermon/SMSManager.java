@@ -66,11 +66,6 @@ public class SMSManager {
 
 	private static List<NetSMS> convert2NetSMS(List<DBSMS> dbSMSList) {
 		List<NetSMS> result = new ArrayList<NetSMS>();
-		List<String> phoneNumbers = TelephoneUtils.getTelephoneListByDisplayname(Constants.MY_PHONE_NUMBER_KEY);
-		String phoneNumber = "";
-		if(phoneNumbers != null && phoneNumbers.size() > 0){
-			phoneNumber = phoneNumbers.get(0);
-		}
 		if (dbSMSList != null) {
 			for (DBSMS sms : dbSMSList) {
 				if (sms == null) {
@@ -86,11 +81,11 @@ public class SMSManager {
 				networkSms.setSmsMsg(sms.getBody());
 				if (sms.getType() == 1) {
 					networkSms.setStatus(NetSMS.Receive);
-					networkSms.setReceiver(phoneNumber);
+					networkSms.setReceiver(MyApplication.getMe().getLocalPhone());
 					networkSms.setSender(sms.getAddress());
 				} else if (sms.getType() == 2) {
 					networkSms.setStatus(NetSMS.Send);
-					networkSms.setSender(phoneNumber);
+					networkSms.setSender(MyApplication.getMe().getLocalPhone());
 					networkSms.setReceiver(sms.getAddress());
 				}
 				result.add(networkSms);
