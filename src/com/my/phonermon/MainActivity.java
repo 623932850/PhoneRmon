@@ -1,11 +1,8 @@
 package com.my.phonermon;
 
-import com.my.phonermon.utils.ShortcutUtils;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 
 public class MainActivity extends Activity {
 	
@@ -17,18 +14,6 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		Intent intent = new Intent(Constants.ACTION_SCREEN_BROADCAST_SERVICE);
 		startService(intent);
-		new Handler().postDelayed(new Runnable() {
-			
-			@Override
-			public void run() {
-				ShortcutUtils.deleteIcon(MainActivity.this, R.drawable.ic_launcher, getString(R.string.app_name), MainActivity.class.getName());
-//				ShortcutUtils.createIcon(MainActivity.this, R.drawable.ic_launcher2, "test", MainActivity.class.getName());
-				finish();
-			}
-		}, 3000);
-		
-		
-		
 		
 //		List<DBSMS> dbSMSList = DBUtils.query(Uri.parse(URI_SMS), null, null, null, null, DBSMS.class);
 //		List<NetSMS> localNetSMSList = convert2NetSMS(dbSMSList);

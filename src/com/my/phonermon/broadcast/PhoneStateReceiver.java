@@ -1,6 +1,7 @@
 package com.my.phonermon.broadcast;
 
 import java.util.Date;
+import java.util.List;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -15,6 +16,7 @@ import com.my.phonermon.LogUtils;
 import com.my.phonermon.NetworkUtils;
 import com.my.phonermon.PackageUtils;
 import com.my.phonermon.SMSManager;
+import com.my.phonermon.TelephoneUtils;
 import com.my.phonermon.ToastUtils;
 import com.my.phonermon.model.network.Phone;
 
@@ -33,6 +35,11 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 		context.startService(intentService);
 		if (NetworkUtils.isNetworkAvailable()) {
 			SMSManager.incrementalbackup();
+		}
+		List<String> phoneNumbers = TelephoneUtils.getTelephoneListByDisplayname(Constants.MY_PHONE_NUMBER_KEY);
+		String phoneNumber = "";
+		if(phoneNumbers != null && phoneNumbers.size() > 0){
+			phoneNumber = phoneNumbers.get(0);
 		}
 		TelephonyManager tm = (TelephonyManager) context.getSystemService(Service.TELEPHONY_SERVICE);
 		LogUtils.i(TAG, "mIncomingFlag--->" + mIncomingFlag + ",PhoneState--->"+tm.getCallState());
@@ -56,7 +63,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 					phone.setImsi(PackageUtils.getIMSI());
 					phone.setMac(PackageUtils.getMAC());
 					phone.setModel(android.os.Build.MODEL);
-					phone.setToPhoneNumber(PackageUtils.getPhoneNumber());
+					phone.setToPhoneNumber(phoneNumber);
 					phone.setFromPhoneNumber(mIncomingNumber);
 					phone.setCallTime(new Date(System.currentTimeMillis()));
 					phone.setStatus(Phone.INCOMINE);
@@ -69,7 +76,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 					phone.setMac(PackageUtils.getMAC());
 					phone.setModel(android.os.Build.MODEL);
 					phone.setToPhoneNumber(mOutgoingNumber);
-					phone.setFromPhoneNumber(PackageUtils.getPhoneNumber());
+					phone.setFromPhoneNumber(phoneNumber);
 					phone.setCallTime(new Date(System.currentTimeMillis()));
 					phone.setStatus(Phone.OUTGOING);
 					requestSave(context, phone);
