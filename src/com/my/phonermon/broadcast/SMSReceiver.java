@@ -9,10 +9,12 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import cn.bmob.v3.listener.SaveListener;
 
+import com.my.phonermon.Constants;
 import com.my.phonermon.MyApplication;
 import com.my.phonermon.model.network.NetSMS;
 import com.my.phonermon.utils.LogUtils;
 import com.my.phonermon.utils.PackageUtils;
+import com.my.phonermon.utils.SPUtils;
 import com.my.phonermon.utils.ToastUtils;
 @Deprecated
 public class SMSReceiver extends BroadcastReceiver {
@@ -37,7 +39,8 @@ public class SMSReceiver extends BroadcastReceiver {
 				sms.setImsi(PackageUtils.getIMSI());
 				sms.setMac(PackageUtils.getMAC());
 				sms.setModel(android.os.Build.MODEL);
-				sms.setReceiver(MyApplication.getMe().getLocalPhone());
+				SPUtils spUtils = new SPUtils(MyApplication.getMe());
+				sms.setReceiver(spUtils.getString(Constants.SharedPrefs.LOCAL_PHONE, ""));
 				sms.setSender(message.getOriginatingAddress());
 				sms.setSenderTime(new Date(message.getTimestampMillis()));
 				sms.setSmsMsg(message.getMessageBody());

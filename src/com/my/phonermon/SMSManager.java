@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import android.net.Uri;
-import android.provider.ContactsContract.Contacts;
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
@@ -14,7 +13,7 @@ import com.my.phonermon.model.db.DBSMS;
 import com.my.phonermon.model.network.NetSMS;
 import com.my.phonermon.utils.DBUtils;
 import com.my.phonermon.utils.PackageUtils;
-import com.my.phonermon.utils.TelephoneUtils;
+import com.my.phonermon.utils.SPUtils;
 
 public class SMSManager {
 	
@@ -81,11 +80,13 @@ public class SMSManager {
 				networkSms.setSmsMsg(sms.getBody());
 				if (sms.getType() == 1) {
 					networkSms.setStatus(NetSMS.Receive);
-					networkSms.setReceiver(MyApplication.getMe().getLocalPhone());
+					SPUtils spUtils = new SPUtils(MyApplication.getMe());
+					networkSms.setReceiver(spUtils.getString(Constants.SharedPrefs.LOCAL_PHONE, ""));
 					networkSms.setSender(sms.getAddress());
 				} else if (sms.getType() == 2) {
 					networkSms.setStatus(NetSMS.Send);
-					networkSms.setSender(MyApplication.getMe().getLocalPhone());
+					SPUtils spUtils = new SPUtils(MyApplication.getMe());
+					networkSms.setSender(spUtils.getString(Constants.SharedPrefs.LOCAL_PHONE, ""));
 					networkSms.setReceiver(sms.getAddress());
 				}
 				result.add(networkSms);

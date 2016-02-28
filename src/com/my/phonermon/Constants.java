@@ -7,4 +7,8 @@ public class Constants {
 	public static final String MY_PHONE_NUMBER_KEY = "PhoneRmon";
 	
 
+	public static final class SharedPrefs{
+		
+		public static final String LOCAL_PHONE = "localPhoneNumber";
+	}
 }

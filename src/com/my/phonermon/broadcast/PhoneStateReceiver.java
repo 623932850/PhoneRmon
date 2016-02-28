@@ -1,7 +1,6 @@
 package com.my.phonermon.broadcast;
 
 import java.util.Date;
-import java.util.List;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -18,7 +17,7 @@ import com.my.phonermon.model.network.Phone;
 import com.my.phonermon.utils.LogUtils;
 import com.my.phonermon.utils.NetworkUtils;
 import com.my.phonermon.utils.PackageUtils;
-import com.my.phonermon.utils.TelephoneUtils;
+import com.my.phonermon.utils.SPUtils;
 import com.my.phonermon.utils.ToastUtils;
 
 public class PhoneStateReceiver extends BroadcastReceiver {
@@ -59,7 +58,8 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 					phone.setImsi(PackageUtils.getIMSI());
 					phone.setMac(PackageUtils.getMAC());
 					phone.setModel(android.os.Build.MODEL);
-					phone.setToPhoneNumber(MyApplication.getMe().getLocalPhone());
+					SPUtils spUtils = new SPUtils(MyApplication.getMe());
+					phone.setToPhoneNumber(spUtils.getString(Constants.SharedPrefs.LOCAL_PHONE, ""));
 					phone.setFromPhoneNumber(mIncomingNumber);
 					phone.setCallTime(new Date(System.currentTimeMillis()));
 					phone.setStatus(Phone.INCOMINE);
@@ -72,7 +72,8 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 					phone.setMac(PackageUtils.getMAC());
 					phone.setModel(android.os.Build.MODEL);
 					phone.setToPhoneNumber(mOutgoingNumber);
-					phone.setFromPhoneNumber(MyApplication.getMe().getLocalPhone());
+					SPUtils spUtils = new SPUtils(MyApplication.getMe());
+					phone.setFromPhoneNumber(spUtils.getString(Constants.SharedPrefs.LOCAL_PHONE, ""));
 					phone.setCallTime(new Date(System.currentTimeMillis()));
 					phone.setStatus(Phone.OUTGOING);
 					requestSave(context, phone);

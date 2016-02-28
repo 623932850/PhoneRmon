@@ -1,12 +1,30 @@
 package com.my.phonermon;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 
-public class MainActivity extends Activity {
+import com.my.phonermon.utils.SPUtils;
+import com.my.phonermon.utils.TelephoneUtils;
+
+public class MainActivity extends BaseActivity {
 	
 	public static final String URI_SMS = "content://sms";
+	
+	private void initLocalPhoneNumber(){
+		List<String> list = TelephoneUtils.getTelephoneListByDisplayname(Constants.MY_PHONE_NUMBER_KEY);
+		if(list.size() > 0){
+			SPUtils spUtils = new SPUtils(this);
+			spUtils.setString("localPhoneNumber", list.get(0));
+		}
+		
+	}
+	
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -14,6 +32,14 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		Intent intent = new Intent(Constants.ACTION_SCREEN_BROADCAST_SERVICE);
 		startService(intent);
+		initLocalPhoneNumber();
+		findViewById(R.id.btn).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				throw new NullPointerException("test crash report");
+			}
+		});
+		
 		
 //		List<DBSMS> dbSMSList = DBUtils.query(Uri.parse(URI_SMS), null, null, null, null, DBSMS.class);
 //		List<NetSMS> localNetSMSList = convert2NetSMS(dbSMSList);
