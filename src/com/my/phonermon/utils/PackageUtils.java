@@ -1,4 +1,6 @@
-package com.my.phonermon;
+package com.my.phonermon.utils;
+
+import com.my.phonermon.MyApplication;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;

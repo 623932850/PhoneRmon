@@ -1,5 +1,7 @@
 package com.my.phonermon;
 
+import com.my.phonermon.utils.PackageUtils;
+
 import android.app.Application;
 import cn.bmob.v3.Bmob;
 

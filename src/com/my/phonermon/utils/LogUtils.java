@@ -1,4 +1,4 @@
-package com.my.phonermon;
+package com.my.phonermon.utils;
 
 import android.util.Log;
 

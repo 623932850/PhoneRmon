@@ -1,7 +1,9 @@
-package com.my.phonermon;
+package com.my.phonermon.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.my.phonermon.MyApplication;
 
 import android.content.ContentResolver;
 import android.database.Cursor;

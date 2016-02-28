@@ -1,9 +1,9 @@
 package com.my.phonermon.broadcast;
 
 import com.my.phonermon.Constants;
-import com.my.phonermon.LogUtils;
-import com.my.phonermon.NetworkUtils;
 import com.my.phonermon.SMSManager;
+import com.my.phonermon.utils.LogUtils;
+import com.my.phonermon.utils.NetworkUtils;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
