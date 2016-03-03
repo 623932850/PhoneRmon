@@ -4,7 +4,6 @@ import android.app.Application;
 import cn.bmob.v3.Bmob;
 
 import com.my.phonermon.utils.PackageUtils;
-import com.umeng.analytics.MobclickAgent;
 
 public class MyApplication extends Application{
 	

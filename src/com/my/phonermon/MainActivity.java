@@ -2,7 +2,6 @@ package com.my.phonermon;
 
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -24,19 +23,17 @@ public class MainActivity extends BaseActivity {
 		
 	}
 	
-
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		Intent intent = new Intent(Constants.ACTION_SCREEN_BROADCAST_SERVICE);
-		startService(intent);
 		initLocalPhoneNumber();
 		findViewById(R.id.btn).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				throw new NullPointerException("test crash report");
+				Intent intent = new Intent(Constants.ACTION_SCREEN_BROADCAST_SERVICE);
+				intent.setPackage(getPackageName());
+				startService(intent);
 			}
 		});
 		
