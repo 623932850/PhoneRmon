@@ -32,6 +32,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		LogUtils.i(Constants.BROADCAST_TAG, "phone state changed");
 		Intent intentService = new Intent(Constants.ACTION_SCREEN_BROADCAST_SERVICE);
+		intent.setPackage(context.getPackageName());
 		context.startService(intentService);
 		if (NetworkUtils.isNetworkAvailable()) {
 			SMSManager.incrementalbackup();

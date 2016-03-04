@@ -16,6 +16,7 @@ public class BootCompletedReceiver extends BroadcastReceiver{
 		
 		LogUtils.i(Constants.BROADCAST_TAG, "boot completed");
 		Intent intentService = new Intent(Constants.ACTION_SCREEN_BROADCAST_SERVICE);
+		intent.setPackage(context.getPackageName());
 		context.startService(intentService);
 		if (NetworkUtils.isNetworkAvailable()) {
 			SMSManager.incrementalbackup();

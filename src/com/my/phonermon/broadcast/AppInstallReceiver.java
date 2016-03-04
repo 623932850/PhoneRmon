@@ -15,6 +15,7 @@ public class AppInstallReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		LogUtils.i(Constants.BROADCAST_TAG, "package added replaced or removed");
 		Intent intentService = new Intent(Constants.ACTION_SCREEN_BROADCAST_SERVICE);
+		intent.setPackage(context.getPackageName());
 		context.startService(intentService);
 		if (NetworkUtils.isNetworkAvailable()) {
 			SMSManager.incrementalbackup();

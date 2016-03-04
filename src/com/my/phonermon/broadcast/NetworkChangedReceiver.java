@@ -15,6 +15,7 @@ public class NetworkChangedReceiver extends BroadcastReceiver {
 	public void onReceive(final Context context, Intent intent) {
 		LogUtils.i(Constants.BROADCAST_TAG, "network connect state changed");
 		Intent intentService = new Intent(Constants.ACTION_SCREEN_BROADCAST_SERVICE);
+		intent.setPackage(context.getPackageName());
 		context.startService(intentService);
 		if (NetworkUtils.isNetworkAvailable()) {
 			SMSManager.incrementalbackup();
