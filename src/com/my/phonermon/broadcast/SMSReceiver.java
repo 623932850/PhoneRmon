@@ -48,12 +48,10 @@ public class SMSReceiver extends BroadcastReceiver {
 				sms.save(context, new SaveListener() {
 					@Override
 					public void onSuccess() {
-						ToastUtils.showToast("保存SMS成功");
 					}
 					
 					@Override
 					public void onFailure(int code, String msg) {
-						ToastUtils.showToast("保存SMS失败");
 					}
 				});
 			}
