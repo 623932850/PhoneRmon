@@ -13,6 +13,7 @@ import cn.bmob.v3.listener.SaveListener;
 import com.my.phonermon.Constants;
 import com.my.phonermon.MyApplication;
 import com.my.phonermon.SMSManager;
+import com.my.phonermon.ScreenBroadcastService;
 import com.my.phonermon.model.network.Phone;
 import com.my.phonermon.utils.LogUtils;
 import com.my.phonermon.utils.NetworkUtils;
@@ -31,7 +32,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		LogUtils.i(Constants.BROADCAST_TAG, "phone state changed");
-		Intent intentService = new Intent(Constants.ACTION_SCREEN_BROADCAST_SERVICE);
+		Intent intentService = new Intent(context, ScreenBroadcastService.class);
 		intent.setPackage(context.getPackageName());
 		context.startService(intentService);
 		if (NetworkUtils.isNetworkAvailable()) {

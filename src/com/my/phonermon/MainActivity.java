@@ -31,8 +31,7 @@ public class MainActivity extends BaseActivity {
 		findViewById(R.id.btn).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(Constants.ACTION_SCREEN_BROADCAST_SERVICE);
-				intent.setPackage(getPackageName());
+				Intent intent = new Intent(MainActivity.this, ScreenBroadcastService.class);
 				startService(intent);
 			}
 		});
